@@ -16,3 +16,12 @@ var pingPong = function(countTo){
   }
   return array;
 };
+
+$(document).ready(function(){
+  $("form#pingPong").submit(function(event){
+    var userNumber = $("#userInput").val();
+    var result = pingPong(userNumber);
+    $(".result").text(result);
+    event.preventDefault();
+  })
+})
