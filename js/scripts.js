@@ -4,7 +4,7 @@ var pingPong = function(countTo){
     array.push(i);
     for (var j = 0 ; j < array.length ; j ++){
       if (array[j] % 15 === 0){
-        array.splice(j,1,"pingpong");
+        array.splice(j,1,"ping-pong");
       }
       else if (array[j] % 3 === 0){
         array.splice(j,1,"ping");
@@ -19,9 +19,14 @@ var pingPong = function(countTo){
 
 $(document).ready(function(){
   $("form#pingPong").submit(function(event){
-    var userNumber = $("#userInput").val();
+    var userNumber = parseInt($("#userInput").val());
     var result = pingPong(userNumber);
-    $(".result").text(result);
-    event.preventDefault();
-  })
-})
+    var listItem = "";
+    for (var i = 0; i < result.length; i++ ) {
+        listItem += "<li>"  + result[i] + "</li>";
+    }
+      document.getElementById("itemList").innerHTML = listItem;
+      $("#hidden").show();
+      event.preventDefault();
+  });
+});
