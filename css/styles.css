@@ -4,3 +4,38 @@
 #hidden {
   display: none;
 }
+.sideBar {
+  margin-top: 25px;
+  float: left;
+  height: 1000px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #00cc00;
+}
+#banner {
+  background-color: #a0dfc0;
+}
+.title {
+  text-align: center;
+}
+h1 {
+  font-size: 350%;
+}
+.title {
+  margin: 40px;
+}
+body {
+  background-color: #ecf2f9;
+}
+#results {
+  margin: 30px;
+}
+.blue {
+  color: #0066ff;
+}
+.brown {
+  color: #994c00;
+}
+hr {
+  color: black;
+}

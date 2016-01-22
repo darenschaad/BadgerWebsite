@@ -9,6 +9,6 @@ describe("pingPong", function(){
     expect(pingPong("6")).to.eql([1,2,"ping",4,"pong","ping"]);
   });
   it("will insert 'pingpong' for numbers divisible by 15", function(){
-    expect(pingPong("15")).to.eql([1,2,"ping",4,"pong","ping",7,8,"ping","pong",11,"ping",13,14,"pingpong"]);
+    expect(pingPong("15")).to.eql([1,2,"ping",4,"pong","ping",7,8,"ping","pong",11,"ping",13,14,"ping-pong"]);
   });
 });
