@@ -4,14 +4,6 @@
 #hidden {
   display: none;
 }
-.sideBar {
-  margin-top: 25px;
-  float: left;
-  height: 1000px;
-  padding-left: 20px;
-  padding-right: 20px;
-  background-color: #00cc00;
-}
 #banner {
   background-color: #a0dfc0;
 }
@@ -38,4 +30,40 @@ body {
 }
 hr {
   color: black;
+}
+.white {
+  color: #e5ffff;
+}
+html, body {
+  height:  %;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px; /* bottom = footer height */
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    background-color: #a0dfc0;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.sideBar {
+  position: relative;
+  margin-top: 25px;
+  float: left;
+  /*height: 100%;*/
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #00cc66;
+  margin-bottom: 400px;
+}
+#mainBody {
+  padding-left: 50px;
 }
