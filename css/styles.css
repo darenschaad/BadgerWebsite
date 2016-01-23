@@ -55,6 +55,7 @@ footer {
   padding-left: 20px;
   padding-right: 20px;
   background-color: #00cc66;
+  min-height: 400px;
 }
 #mainBody {
   padding-left: 2px;
