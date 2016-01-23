@@ -6,6 +6,7 @@
 }
 #banner {
   background-color: #a0dfc0;
+  margin-bottom: 15px;
 }
 .title {
   text-align: center;
@@ -20,37 +21,29 @@ body {
 }
 #results {
   margin: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
 }
-.blue {
+.blue h4{
   color: #0066ff;
+  font-size: 140%;
 }
-.brown {
+.brown h5 {
   color: #994c00;
+  font-size: 130%;
 }
 hr {
   border-color: black;
 }
-.white {
+.white h5 {
   color: #e5ffff;
+  font-size: 115%;
 }
 html {
     position: relative;
     min-height: 100%;
 }
-footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 45px;
-    width: 100%;
-    background-color: #a0dfc0;
-    padding-left: 20px;
-    padding-top: 10px;
-}
 .sideBar {
   position: relative;
-  margin-top: 25px;
   float: left;
   padding-left: 20px;
   padding-right: 20px;
@@ -62,31 +55,43 @@ footer {
   overflow: auto;
 }
 .image{
-text-align: center;
-max-height: 40%;
-max-width: 100%
+  text-align: center;
+  max-height: 40%;
+  max-width: 100%
 }
 input#bigbutton {
-width:200px;
-background: #3e9cbf;
-padding: 4px 4px 4px;
-border:1px solid #3e9cbf;
-cursor:pointer;
-font-size:1.3em;
-font-family:sans-serif;
-letter-spacing:.1em;
-text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.3);
-color: #fff;
--webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
--moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
--moz-border-radius: 10px;
--webkit-border-radius: 10px;
-border-radius: 10px;
+  width:200px;
+  background: #3e9cbf;
+  padding: 4px 4px 4px;
+  border:1px solid #3e9cbf;
+  cursor:pointer;
+  font-size:1.3em;
+  font-family:sans-serif;
+  letter-spacing:.1em;
+  text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  -webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
+  -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
+  box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 input#bigbutton:hover, input#bigbutton:focus {
-color:#dfe7ea;
--webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
--moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
+  color:#dfe7ea;
+  -webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
+  -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
+  box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
+}
+footer {
+  color: red;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 85px;
+  width: 100%;
+  background-color: #a0dfc0;
+  padding-left: 20px;
+  padding-top: 30px;
+  background-image: url("../images/balls.jpg");
 }
