@@ -19,21 +19,10 @@ var pingPong = function(countTo){
 
 $(document).ready(function(){
   $("form#pingPong").submit(function(event){
-    if (($("#userInput").val())){
-      var userNumber = parseInt($("#userInput").val());
-      var result = pingPong(userNumber);
-      var listItem = "";
-      for (var i = 0; i < result.length; i++ ) {
-          listItem += "<li>"  + result[i] + "</li>";
-      }
-        document.getElementById("itemList").innerHTML = listItem;
-        $("#hidden").show();
-        event.preventDefault();
-    }
-    else {
-      alert("Please enter a number to submit")
 
-    }
+        event.preventDefault();
+
+
 
   });
 });
