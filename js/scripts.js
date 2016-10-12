@@ -17,10 +17,49 @@ var pingPong = function(countTo){
   return array;
 };
 
+function base64(file, callback){
+  console.log("Hello");
+  console.log(file);
+  var coolFile = {};
+  function readerOnload(e){
+    var base64 = btoa(e.target.result);
+    coolFile.base64 = base64;
+    callback(coolFile)
+  };
+
+  var reader = new FileReader();
+  reader.onload = readerOnload;
+
+  var file = file[0].files[0];
+  console.log(file);
+  coolFile.filetype = file.type;
+  coolFile.size = file.size;
+  coolFile.filename = file.name;
+  reader.readAsBinaryString(file);
+}
+
 $(document).ready(function(){
   $("form#pingPong").submit(function(event){
+    event.preventDefault();
 
-        event.preventDefault();
+    base64( $("#file"), function(data){
+      console.log(data.base64)
+    })
+    var badgeId = "-KHLTOv7JMjOzRePqJLQ";
+    return firebase.database().ref('/badges/' + badgeId).once('value').then(function(snapshot) {
+      var badgename = snapshot.val().name;
+      console.log(badgename);
+      // ...
+
+    });
+      // function createBadge(userId, name, email, imageUrl) {
+      //   firebase.database().ref('users/' + userId).set({
+      //   username: name,
+      //   email: email,
+      //   profile_picture : imageUrl
+      //   });
+      // }
+
 
 
 
