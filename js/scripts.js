@@ -36,6 +36,13 @@ function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArr
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
 
+function searchBadge(dewey) {
+  var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
+    console.log(snapshot.val());
+  })
+
+}
+
 function receivedText(e) {
   var lines = e.target.result;
   var newObject = JSON.parse(lines);
@@ -78,6 +85,13 @@ function receivedText(e) {
 
 
 $(document).ready(function(){
+
+  $("form.search-form").submit(function(event){
+    event.preventDefault();
+    var searchDewey = parseFloat($("#badgeSearchDewey").val());
+    searchBadge(searchDewey);
+
+  })
   var csv = "";
 
   $("form#badgeForm").submit(function(event){
