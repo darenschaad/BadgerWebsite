@@ -17,51 +17,128 @@ var pingPong = function(countTo){
   return array;
 };
 
-function base64(file, callback){
-  console.log("Hello");
-  console.log(file);
-  var coolFile = {};
-  function readerOnload(e){
-    var base64 = btoa(e.target.result);
-    coolFile.base64 = base64;
-    callback(coolFile)
-  };
-
-  var reader = new FileReader();
-  reader.onload = readerOnload;
-
-  var file = file[0].files[0];
-  console.log(file);
-  coolFile.filetype = file.type;
-  coolFile.size = file.size;
-  coolFile.filename = file.name;
-  reader.readAsBinaryString(file);
+function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArray) {
+  var newRef = firebase.database().ref('badges/').push();
+  var pushId = newRef.key;
+  var firebaseObject = {
+    name: name,
+    index: index,
+    latitude: latitude,
+    longitude: longitude,
+    rating: rating,
+    pushId: pushId,
+    imageUrl: imageUrl,
+    tags: {}
+  }
+  for (var i = 0; i < tagsArray.length; i++) {
+    firebaseObject.tags[i] = tagsArray[i];
+  }
+  firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
 
-$(document).ready(function(){
-  $("form#pingPong").submit(function(event){
-    event.preventDefault();
+function receivedText(e) {
+  var lines = e.target.result;
+  var newObject = JSON.parse(lines);
+  console.log(newArray);
+  var newArray = newObject.tags;
+  for(var i = 0; i < newArray.length; i++) {
+    var tagsObject = newArray[i];
+    var ref = firebase.database().ref('badges/' + i + "/tags/");
+      var badgeTagsObject = {};
+      for(var key in tagsObject) {
+        if(tagsObject.hasOwnProperty(key)) {
+          console.log(tagsObject[key]);
+          if(key !== "name" && tagsObject[key] !== "") {
+            badgeTagsObject[key] = tagsObject[key];
+          }
+        }
+      }
+      console.log(badgeTagsObject);
+      ref.set(badgeTagsObject);
+  }
+}
 
-    base64( $("#file"), function(data){
-      console.log(data.base64)
-    })
-    var badgeId = "-KHLTOv7JMjOzRePqJLQ";
-    return firebase.database().ref('/badges/' + badgeId).once('value').then(function(snapshot) {
-      var badgename = snapshot.val().name;
-      console.log(badgename);
+  function base64(file, callback){
+    var coolFile = {};
+    function readerOnload(e){
+      var base64 = btoa(e.target.result);
+      coolFile.base64 = base64;
+      callback(coolFile)
+    };
+
+    var reader = new FileReader();
+    reader.onload = readerOnload;
+
+    // var file = file[0].files[0];
+    coolFile.filetype = file.type;
+    coolFile.size = file.size;
+    coolFile.filename = file.name;
+    reader.readAsBinaryString(file);
+  }
+
+
+$(document).ready(function(){
+  var csv = "";
+
+  $("form#badgeForm").submit(function(event){
+    event.preventDefault();
+    var image64;
+    var imageFiles = $("#imageFile");
+    console.log(imageFiles);
+    var imageFilesLength = imageFiles[0].files.length;
+
+
+    for (var i = 0; i < imageFilesLength; i++) {
+      base64(imageFiles[0].files[i], function(data){
+        csv += data.base64 + "\n"
+
+      })
+    }
+
+    // base64( $("#imageFile"), function(data){
+    //   image64 = data.base64;
+    //   var name = $("#badgeName").val();
+    //   var index = $("#badgeIndex").val();
+    //   var latitude = $("#badgeLatitude").val();
+    //   var longitude = $("#badgeLongitude").val();
+    //   var rating = $("#badgeRating").val();
+    //
+    //   createBadge(name, index, latitude, longitude, rating, image64, tagsArray);
+    // })
+
+
+    // var badgeId = "-KHLTOv7JMjOzRePqJLQ";
+    // return firebase.database().ref('/badges/' + badgeId).once('value').then(function(snapshot) {
+    //   var badgename = snapshot.val().name;
+    //   console.log(badgename);
       // ...
 
-    });
-      // function createBadge(userId, name, email, imageUrl) {
-      //   firebase.database().ref('users/' + userId).set({
-      //   username: name,
-      //   email: email,
-      //   profile_picture : imageUrl
-      //   });
-      // }
-
-
-
+    // });
 
   });
+  var tagsArray = [];
+  $("#formJson").submit(function(event){
+    event.preventDefault();
+    console.log(csv);
+
+    var tagsJson = $("#fileJson");
+    var tagsFile = tagsJson[0].files[0];
+    var fr = new FileReader();
+    console.log(fr);
+    fr.onload = receivedText;
+    fr.readAsText(tagsFile);
+  })
+
+
+
+  $("form#tagForm").submit(function(event){
+    event.preventDefault();
+    var newTag = $('#badgeTag').val();
+    $("#tags").append('<li>' + newTag + '</li>');
+    tagsArray.push(newTag);
+    $('#badgeTag').val("");
+    console.log(tagsArray);
+  });
+
+
 });

@@ -3,16 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title></title>
+    <title>Badger Den</title>
+    <link rel="shortcut icon" href="images/badger.ico" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styles.css">
   </head>
+
   <body>
     <section id="banner">
       <div class="container">
         <div class="title">
-          <h1><strong>Ping-Pong Page!</strong></h1>
+          <h1><strong>Badger Den</strong></h1>
         </div>
       </div>
     </section>
@@ -21,13 +23,14 @@
         <section id="side">
           <div class="col-sm-3">
             <div class="sideBar">
-              <h3>About Ping-Pong</h3>
+              <h3>About Badger Den</h3>
               <hr COLOR = "black">
               <div class="blue">
                 <h4>Created By:</h4>
               </div>
               <div class="white">
                 <h5>Daren Schaad</h5>
+                <h5>Matt Rosanio</h5>
               </div>
               <div class="blue">
                 <h4>GitHub Username:</h4>
@@ -36,10 +39,10 @@
                 <h5>darenschaad</h5>
               </div>
               <div class="blue">
-                <h4>Intro to Programming:</h4>
+                <h4>A Functional Website:</h4>
               </div>
               <div class="white">
-                <h5>Week 3 Code Review</h5>
+                <h5>Create Edit and Delete</h5>
               </div>
             </div>
           </div>
@@ -48,35 +51,61 @@
           <div class="col-sm-9">
             <div class="container">
               <div class="readable">
-                <img class="image" src="images/pingPong.jpg" alt="Picture of a derpy ping pong player" />
-                <h2>Let's Play!</h2>
-                <h4>Rules:</h4>
-                <p>Ping Pong will count up to your number from 1 with the following exceptions:</p>
-                <ol>
-                  <li>Numbers divisible by 3 are returned as "ping"</li>
-                  <li>Numbers divisible by 5 are returned as "pong"</li>
-                  <li>Numbers divisible by 3 and 5 are returned as "ping-pong"</li>
-                </ol>
-                <form class="form-inline" id="pingPong">
+                <form class="form-inline" id="badgeForm">
                   <div class="form-group">
-                    <label for="userInput"> Enter your number here:</label>
-                    <input id="userInput" type="number" class="form-control">
+                    <label for="badgeName"> Enter Badge Name</label>
+                    <input id="badgeName" type="text" class="form-control">
                   </div>
-                  <input type="file" id="file" />
-                  <input id="bigbutton" type="submit" value="Ping Pong!" />
+                  <div class="form-group">
+                    <label for="badgeIndex"> Enter Badge index</label>
+                    <input id="badgeIndex" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badgeLatitude"> Enter Badge Latitude</label>
+                    <input id="badgeLatitude" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badgeLongitude"> Enter Badge Longitude</label>
+                    <input id="badgeLongitude" type="number" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badgeRating"> Enter Badge Rating</label>
+                    <input id="badgeRating" type="number" class="form-control">
+                  </div>
+
+
+                  <!-- <div class="form-group">
+                    <label for="badgeTags"> Enter Badge Tags</label>
+                    <input id="badgeTags" type="text" class="form-control">
+                  </div> -->
+                  <input type="file" id="imageFile" multiple />
+                  <input id="bigbutton" type="submit" value="Create Badge" />
                 </form>
-              </div>
-            </div>
-            <section id="results">
-              <div class="container">
-                <div id="hidden">
-                  <p>Here are your results:</p>
-                  <br>
-                  <ul id="itemList">
+
+                <div class="">
+                  <form class="form-inline" id="tagForm">
+                    <div class="form-group">
+                      <label for="badgeTag"> Enter Badge Tag</label>
+                      <input id="badgeTag" type="text" class="form-control">
+                    </div>
+                    <input id="bigbutton" type="submit" value="Add Tag" />
+                  </form>
+                  <ul id="tags">
+
                   </ul>
                 </div>
+                <form id="formJson" action="index.html">
+                  <hr>
+                  <input type="file" id="fileJson" />
+                  <button id="json" type="submit" name="button" class="btn btn-primary btn-lg">Parse Json</button>
+                  <hr>
+                </form>
+
               </div>
-            </section>
+
+
+            </div>
+
           </div>
         </section>
       </div>
