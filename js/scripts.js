@@ -38,7 +38,20 @@ function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArr
 
 function searchBadge(dewey) {
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
-    console.log(snapshot.val());
+    snapshot.forEach(function(childSnapshot) {
+      var badge = childSnapshot.val();
+      $("#badgeEditName").val(badge.name);
+      $("#badgeEditComments").val(badge.comments);
+      $("#badgeEditDescription").val(badge.description);
+      $("#badgeEditProof").val(badge.proof);
+      $("#badgeEditLatitude").val(badge.latitude);
+      $("#badgeEditLongitude").val(badge.longitude);
+      $("#badgeEditDewey").val(badge.index);
+      $("#badgeEditCategory").val(badge.category);
+      console.log(badge.name);
+    })
+
+
   })
 
 }
@@ -86,10 +99,14 @@ function receivedText(e) {
 
 $(document).ready(function(){
 
+  function setEditFormFields(badge){
+    $("#badgeSearchName").val(badge.name);
+  }
   $("form.search-form").submit(function(event){
     event.preventDefault();
     var searchDewey = parseFloat($("#badgeSearchDewey").val());
     searchBadge(searchDewey);
+
 
   })
   var csv = "";
