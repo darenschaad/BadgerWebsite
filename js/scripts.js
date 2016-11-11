@@ -1,25 +1,8 @@
-var pingPong = function(countTo){
-  var array = [];
-  for (var i = 1 ; i <= parseInt(countTo); i ++){
-    array.push(i);
-    for (var j = 0 ; j < array.length ; j ++){
-      if (array[j] % 15 === 0){
-        array.splice(j,1,"ping-pong");
-      }
-      else if (array[j] % 3 === 0){
-        array.splice(j,1,"ping");
-      }
-      else if (array[j] % 5 === 0){
-        array.splice(j,1,"pong");
-      }
-    }
-  }
-  return array;
-};
-
 function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArray) {
   var newRef = firebase.database().ref('badges/').push();
-  var pushId = newRef.key;
+  var query = firebase.database().ref('badges').orderByKey().limitToLast(1).getChild('pushId');
+  console.log(query);
+  var pushId = "a" + newRef.key;
   var firebaseObject = {
     name: name,
     index: index,
@@ -40,6 +23,9 @@ function searchBadge(dewey) {
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var badge = childSnapshot.val();
+      var image64String = badge.imageUrl;
+      document.getElementById('badgeEditImage').setAttribute('src', 'data:image/png;base64,' +image64String);
+      $('#badge')
       $("#badgeEditName").val(badge.name);
       $("#badgeEditComments").val(badge.comments);
       $("#badgeEditDescription").val(badge.description);
@@ -96,6 +82,12 @@ function receivedText(e) {
     reader.readAsBinaryString(file);
   }
 
+  function getLastId() {
+    var query = firebase.database().ref('badges').orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+      return (snapshot.key);
+    });
+  }
+
 
 $(document).ready(function(){
 
@@ -109,10 +101,14 @@ $(document).ready(function(){
 
 
   })
+  $("#searchEditButton").click(function() {
+    $("#editForm").show();
+  })
   var csv = "";
 
   $("form#badgeForm").submit(function(event){
     event.preventDefault();
+    getLastId();
     var image64;
     var imageFiles = $("#imageFile");
     console.log(imageFiles);

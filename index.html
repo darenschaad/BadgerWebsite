@@ -106,9 +106,14 @@
                     <label for="badgeSearch"> Enter Dewey to Search</label>
                     <input id="badgeSearchDewey" class="form-control">
                   </div>
-                  <button type="submit">Search</button>
+                  <button id="searchEditButton" type="submit">Search</button>
                 </form>
-                <form class="edit-form">
+                <form id="editForm">
+                  <label for="badgeEditImage">Existing Badge Image</label>
+                  <img id="badgeEditImage" src="" alt="Existing Badge Image" />
+                  <input type="file" id="edit-image-file"/>
+                  <button type="submit" id="edit-badge-image">Edit Badge image</button>
+
                   <div class="form-group">
                     <label for="badgeName">Badge Name</label>
                     <input id="badgeEditName" class="form-control">
@@ -141,7 +146,7 @@
                     <label for="badgeEditLongitude">Badge Longitude</label>
                     <input id="badgeEditLongitude" class="form-control">
                   </div>
-                  <button type="submit">Edit Badge</button>
+                  <button type="submit" id="edit-badge-button">Edit Badge</button>
                 </form>
               </div>
 
