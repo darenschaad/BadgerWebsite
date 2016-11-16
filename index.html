@@ -109,10 +109,14 @@
                   <button id="searchEditButton" type="submit">Search</button>
                 </form>
                 <form id="editForm">
-                  <label for="badgeEditImage">Existing Badge Image</label>
-                  <img id="badgeEditImage" src="" alt="Existing Badge Image" />
-                  <input type="file" id="edit-image-file"/>
-                  <button type="submit" id="edit-badge-image">Edit Badge image</button>
+                  <div class="form-group">
+                    <label for="badgeEditImage">Existing Badge Image</label>
+                    <img id="badgeEditImage" src="" alt="Existing Badge Image" />
+                  </div>
+                  <div class="form-group">
+                    <label for="badgeEditImageUrl">Badge Image URL</label>
+                    <input id="edit-image-url"class="form-control">
+                  </div>
 
                   <div class="form-group">
                     <label for="badgeName">Badge Name</label>
@@ -149,10 +153,7 @@
                   <button type="submit" id="edit-badge-button">Edit Badge</button>
                 </form>
               </div>
-
-
             </div>
-
           </div>
         </section>
       </div>
