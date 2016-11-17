@@ -18,11 +18,29 @@ function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArr
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
 
+function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId) {
+  // var ref = firebase.database().ref('badges/').set();
+  var firebaseObject = {
+    name: name,
+    index: index,
+    latitude: latitude,
+    longitude: longitude,
+    pushId: pushId,
+    imageUrl: imageUrl,
+    description: description,
+    proof: proof,
+    comments: comments,
+    category: category
+  }
+  firebase.database().ref('badges/' + pushId).set(firebaseObject);
+}
+
 function searchBadge(dewey) {
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var badge = childSnapshot.val();
       var firebaseImageUrl = badge.imageUrl;
+      var visibleIndex = badge.index.substring(1);
       document.getElementById('badgeEditImage').setAttribute('src', firebaseImageUrl);
       $('#edit-image-url').val(badge.imageUrl);
       $("#badgeEditName").val(badge.name);
@@ -31,8 +49,9 @@ function searchBadge(dewey) {
       $("#badgeEditProof").val(badge.proof);
       $("#badgeEditLatitude").val(badge.latitude);
       $("#badgeEditLongitude").val(badge.longitude);
-      $("#badgeEditDewey").val(badge.index);
+      $("#badgeEditDewey").val(visibleIndex);
       $("#badgeEditCategory").val(badge.category);
+      $("#edit-id").val(badge.pushId)
       console.log(badge.name);
     })
   })
@@ -98,7 +117,7 @@ $(document).ready(function(){
   }
   $("form.search-form").submit(function(event){
     event.preventDefault();
-    var searchDewey = $("#badgeSearchDewey").val();
+    var searchDewey = "a" + $("#badgeSearchDewey").val();
     searchBadge(searchDewey);
 
 
@@ -156,6 +175,21 @@ $(document).ready(function(){
 
     fr.onload = receivedText;
     fr.readAsText(tagsFile);
+  })
+
+  $('form#editForm').submit(function(event){
+    event.preventDefault();
+    var imageUrl = $("#edit-image-url").val();
+    var name = $("#badgeEditName").val();
+    var index = "a" + $("#badgeEditDewey").val();
+    var latitude = Number($("#badgeLatitude").val());
+    var longitude = Number($("#badgeLongitude").val());
+    var pushId = parseInt($("#edit-id").val());
+    var proof = $("#badgeEditProof").val();
+    var description = $("#badgeEditDescription").val();
+    var comments = $("#badgeEditComments").val();
+    var category = parseInt($("#badgeEditCategory").val());
+    editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId);
   })
 
 
