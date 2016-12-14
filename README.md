@@ -2,7 +2,7 @@
 
 #### Week 3 code review, Jan 22 2013
 
-## A ping pong program
+## A Badger Production
 #### The user inputs a number and the program counts up to the users number, replacing numbers divisible by 3 with 'ping', numbers divisible by 5 with 'pong' and numbers divisible by 3 and 5 with 'ping-pong'
 
 ## To set up, run the HTML file in a web browser

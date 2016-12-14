@@ -1,4 +1,4 @@
-function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArray) {
+function createBadge(name, index, latitude, longitude, rating, imageUrl, tags, challenges) {
   // this needs to be .set() with the last badge query + 1 for the id
   var newRef = firebase.database().ref('badges/').push();
   var pushId = getLastId() + 1;
@@ -10,15 +10,16 @@ function createBadge(name, index, latitude, longitude, rating, imageUrl, tagsArr
     rating: rating,
     pushId: pushId,
     imageUrl: imageUrl,
-    tags: {}
+    tags: tags,
+    challenges: challenges
   }
-  for (var i = 0; i < tagsArray.length; i++) {
-    firebaseObject.tags[i] = tagsArray[i];
-  }
+  // for (var i = 0; i < tagsArray.length; i++) {
+  //   firebaseObject.tags[i] = tagsArray[i];
+  // }
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
 
-function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId) {
+function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges) {
   // var ref = firebase.database().ref('badges/').set();
   var firebaseObject = {
     name: name,
@@ -30,7 +31,11 @@ function editBadge(name, index, latitude, longitude, imageUrl, description, proo
     description: description,
     proof: proof,
     comments: comments,
-    category: category
+    category: category,
+    creator: creator,
+    date: date,
+    tags: tags,
+    challenges: challenges
   }
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
@@ -42,7 +47,7 @@ function searchBadge(dewey) {
       var firebaseImageUrl = badge.imageUrl;
       var visibleIndex = badge.index.substring(1);
       document.getElementById('badgeEditImage').setAttribute('src', firebaseImageUrl);
-      $('#edit-image-url').val(badge.imageUrl);
+      $('#edit-image-url').val(firebaseImageUrl);
       $("#badgeEditName").val(badge.name);
       $("#badgeEditComments").val(badge.comments);
       $("#badgeEditDescription").val(badge.description);
@@ -52,7 +57,10 @@ function searchBadge(dewey) {
       $("#badgeEditDewey").val(visibleIndex);
       $("#badgeEditCategory").val(badge.category);
       $("#edit-id").val(badge.pushId)
-      console.log(badge.name);
+      $("#badgeEditCreator").val(badge.creator);
+      $("#badgeEditDate").val(badge.date);
+      $("#badgeEditTags").val(badge.tags);
+      $("#badgeEditChallenges").val(badge.challenges);
     })
   })
 
@@ -189,7 +197,11 @@ $(document).ready(function(){
     var description = $("#badgeEditDescription").val();
     var comments = $("#badgeEditComments").val();
     var category = parseInt($("#badgeEditCategory").val());
-    editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId);
+    var creator = $("#badgeEditCreator").val();
+    var date = $("#badgeEditDate").val();
+    var tags = $("#badgeEditTags").val();
+    var challenges = $("#badgeEditChallenges").val();
+    editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges);
   })
 
 
