@@ -51,26 +51,58 @@
           <div class="col-sm-9">
             <div class="container">
               <div class="readable">
-                <form class="form-inline" id="badgeForm">
+                <form id="badge-form">
                   <div class="form-group">
                     <label for="badgeName"> Enter Badge Name</label>
-                    <input id="badgeName" type="text" class="form-control">
+                    <input id="badge-name" type="text" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="badgeIndex"> Enter Badge index</label>
-                    <input id="badgeIndex" type="text" class="form-control">
+                    <label for="badge-index"> Enter Badge Dewey number</label>
+                    <input id="badge-index" type="text" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="badgeLatitude"> Enter Badge Latitude</label>
-                    <input id="badgeLatitude" type="text" class="form-control">
+                    <label for="badge-latitude"> Enter Badge Latitude</label>
+                    <input id="badge-latitude" type="text" value="0" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="badgeLongitude"> Enter Badge Longitude</label>
-                    <input id="badgeLongitude" type="number" class="form-control">
+                    <label for="badge-longitude"> Enter Badge Longitude</label>
+                    <input id="badge-longitude" type="text" value="0" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="badgeRating"> Enter Badge Rating</label>
-                    <input id="badgeRating" type="number" class="form-control">
+                    <label for="badge-imageUrl"> Enter Badge Image URL</label>
+                    <input id="badge-imageUrl" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-description"> Enter Badge Description</label>
+                    <input id="badge-description" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-proof"> Enter Badge Proof</label>
+                    <input id="badge-proof" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-comments"> Enter Badge Comments</label>
+                    <input id="badge-comments" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-category"> Enter Badge Category Number</label>
+                    <input id="badge-category" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-creator"> Enter Badge Creator</label>
+                    <input id="badge-creator" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-date"> Enter Badge Date</label>
+                    <input id="badge-date" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-tags"> Enter Badge Tags</label>
+                    <input id="badge-tags" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="badge-challenges"> Enter Badge Challenges</label>
+                    <input id="badge-challenges" type="text" class="form-control">
                   </div>
 
 
@@ -78,11 +110,11 @@
                     <label for="badgeTags"> Enter Badge Tags</label>
                     <input id="badgeTags" type="text" class="form-control">
                   </div> -->
-                  <input type="file" id="imageFile" multiple />
+                  <!-- <input type="file" id="imageFile" multiple /> -->
                   <input id="bigbutton" type="submit" value="Create Badge" />
                 </form>
 
-                <div class="">
+                <!-- <div class="">
                   <form class="form-inline" id="tagForm">
                     <div class="form-group">
                       <label for="badgeTag"> Enter Badge Tag</label>
@@ -99,7 +131,7 @@
                   <input type="file" id="fileJson" />
                   <button id="json" type="submit" name="button" class="btn btn-primary btn-lg">Parse Json</button>
                   <hr>
-                </form>
+                </form> -->
 
                 <form class="search-form">
                   <div class="form-group">
@@ -170,8 +202,8 @@
 
                   <div class="hidden">
                     <div class="form-group">
-                      <label for="badgeEditId">Badge ID</label>
-                      <input id="edit-id" class="form-control">
+                      <label for="badge-edit-id">Badge ID</label>
+                      <input id="badge-edit-id" class="form-control">
                     </div>
                   </div>
                   <button type="submit" id="edit-badge-button">Edit Badge</button>
