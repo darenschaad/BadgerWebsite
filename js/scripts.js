@@ -1,7 +1,6 @@
-function createBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, creator, pushId, date, tags, challenges, originalIndex) {
+function createBadge(name, index, latitude, longitude, pushId, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex) {
   // this needs to be .set() with the last badge query + 1 for the id
   // var newRef = firebase.database().ref('badges/').push();
-
   var firebaseObject = {
     name: name,
     index: index,
@@ -69,11 +68,18 @@ function searchBadge(dewey) {
 }
 
 function getLastId() {
-  var query = firebase.database().ref('badges').orderByKey().limitToLast(1).on("child_added", function(snapshot) {
-    // console.log(snapshot.key);
-    return (snapshot.key);
-  });
+  return new Promise(function(resolve, reject){
+    try {
+      var query = firebase.database().ref('badges').orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+        resolve(Number(snapshot.key) + 1);
+      });
+    } catch (e) {
+      reject(e);
+    }
+  })
 }
+
+
 
 // function uploadImages(imageArray) {
 //
@@ -95,6 +101,7 @@ $(document).ready(function(){
   })
   $("#searchEditButton").click(function() {
     $("#editForm").show();
+    $("#badge-creator").val(getLastId());
 
   })
 
@@ -115,12 +122,20 @@ $(document).ready(function(){
       var date = $("#badge-date").val();
       var tags = $("#badge-tags").val();
       var challenges = $("#badge-challenges").val();
+      // var pushId = lastId + 1;
+      // var lastId = getLastId();
+      // console.log(pushId);
       // console.log("test" + getLastId());
-      var pushId = 330;
+      getLastId().then(
+        function(result) {
+          console.log(typeof result);
+          createBadge(name, index, latitude, longitude, result, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex);
+        },function(error){
+          alert('Error');
+        }
+      )
 
-      // pushId.then(
 
-        createBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, creator, pushId, date, tags, challenges, originalIndex);
   });
   // var tagsArray = [];
   // $("#formJson").submit(function(event){
