@@ -112,6 +112,7 @@ $(document).ready(function(){
     var searchDewey = "a" + $("#badgeSearchDewey").val();
     searchBadge(searchDewey);
     $("#editForm").show();
+    $("#delete-form").hide();
   })
 
   $("#delete-search-form").submit(function(event){
@@ -123,8 +124,14 @@ $(document).ready(function(){
 
   $("#delete-form").submit(function(event){
     event.preventDefault();
-    var searchDewey = "a" + $("#delete-search-dewey").val();
-    badgeDelete(searchDewey);
+    var answer = confirm("Are you sure you want to delete this badge");
+    if (answer) {
+      var searchDewey = "a" + $("#delete-search-dewey").val();
+      badgeDelete(searchDewey);
+    }else {
+      alert("Badge not deleted");
+    }
+
     // $("#delete-form").show();
   })
 
