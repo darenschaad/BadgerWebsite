@@ -42,6 +42,30 @@ function editBadge(name, index, latitude, longitude, imageUrl, description, proo
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
 }
 
+function searchBadgeDelete(dewey){
+  var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var badge = childSnapshot.val();
+      var firebaseImageUrl = badge.imageUrl;
+      var visibleIndex = badge.index.substring(1);
+      document.getElementById('badge-delete-image').setAttribute('src', firebaseImageUrl);
+      $("#badge-delete-name").append("<h1>" + badge.name + "</h1>");
+      $('#badge-delete-image').val(firebaseImageUrl);
+    })
+  })
+}
+
+function badgeDelete(dewey){
+  var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var badge = childSnapshot.val();
+      var badgeId = badge.pushId;
+      var deleteRef = firebase.database().ref('badges/');
+      deleteRef.child(badgeId).remove();
+    })
+  })
+}
+
 function searchBadge(dewey) {
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
@@ -87,6 +111,21 @@ $(document).ready(function(){
     event.preventDefault();
     var searchDewey = "a" + $("#badgeSearchDewey").val();
     searchBadge(searchDewey);
+    $("#editForm").show();
+  })
+
+  $("#delete-search-form").submit(function(event){
+    event.preventDefault();
+    var searchDewey = "a" + $("#delete-search-dewey").val();
+    searchBadgeDelete(searchDewey);
+    $("#delete-form").show();
+  })
+
+  $("#delete-form").submit(function(event){
+    event.preventDefault();
+    var searchDewey = "a" + $("#delete-search-dewey").val();
+    badgeDelete(searchDewey);
+    // $("#delete-form").show();
   })
 
   $("#edit").submit(function(event){
@@ -108,14 +147,11 @@ $(document).ready(function(){
     $("#delete-search-form").show();
     $("#search-form").hide();
     $("#badge-form").hide();
-  })
-
-  $("#edit").submit(function(event){
-    event.preventDefault();
+    $("#editForm").hide();
   })
 
   $("#searchEditButton").click(function() {
-    $("#editForm").show();
+
   })
 
   $("form#badge-form").submit(function(event){
