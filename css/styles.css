@@ -105,3 +105,11 @@ footer {
 #badge-form {
   display: none;
 }
+
+#delete-search-form {
+  display: none;
+}
+
+#delete-form {
+  display: none;
+}

@@ -93,12 +93,21 @@ $(document).ready(function(){
     event.preventDefault();
     $("#search-form").show();
     $("#badge-form").hide();
+    $("#delete-search-form").hide();
   })
 
   $("#create").submit(function(event){
     event.preventDefault();
     $("#badge-form").show();
     $("#search-form").hide();
+    $("#delete-search-form").hide();
+  })
+
+  $("#delete").submit(function(event){
+    event.preventDefault();
+    $("#delete-search-form").show();
+    $("#search-form").hide();
+    $("#badge-form").hide();
   })
 
   $("#edit").submit(function(event){
