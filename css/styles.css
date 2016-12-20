@@ -18,6 +18,7 @@ h1 {
 }
 body {
   background-color: #ecf2f9;
+  padding-bottom: 50px;
 }
 #results {
   margin: 30px;
@@ -115,6 +116,7 @@ img {
 
 #delete-search-form {
   display: none;
+  padding: 20px;
 }
 
 #delete-form {

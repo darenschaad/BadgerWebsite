@@ -49,7 +49,9 @@ function searchBadgeDelete(dewey){
       var firebaseImageUrl = badge.imageUrl;
       var visibleIndex = badge.index.substring(1);
       document.getElementById('badge-delete-image').setAttribute('src', firebaseImageUrl);
-      $("#badge-delete-name").append("<h1>" + badge.name + "</h1>");
+      $("#badge-delete-name").html("<h1>Activity: " + badge.name + "</h1>");
+      $("#badge-delete-description").html("<h3>To Do: " + badge.description + "\n" + badge.comments + " \n </h3> <hr>");
+      $("#badge-delete-proof").html("<h3>Proof: " + badge.proof + "</h3>");
       $('#badge-delete-image').val(firebaseImageUrl);
     })
   })
@@ -160,10 +162,6 @@ $(document).ready(function(){
     $("#delete-form").hide();
   })
 
-  $("#searchEditButton").click(function() {
-
-  })
-
   $("form#badge-form").submit(function(event){
     event.preventDefault();
 
@@ -181,13 +179,9 @@ $(document).ready(function(){
       var date = $("#badge-date").val();
       var tags = $("#badge-tags").val();
       var challenges = $("#badge-challenges").val();
-      // var pushId = lastId + 1;
-      // var lastId = getLastId();
-      // console.log(pushId);
-      // console.log("test" + getLastId());
+
       getLastId().then(
         function(result) {
-          console.log(typeof result);
           createBadge(name, index, latitude, longitude, result, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex);
           $("#badge-name").val("");
           $("#badge-index").val("");
@@ -208,21 +202,7 @@ $(document).ready(function(){
           alert('Error');
         }
       )
-
-
   });
-  // var tagsArray = [];
-  // $("#formJson").submit(function(event){
-  //   event.preventDefault();
-  //   console.log(csv);
-  //   uploadImages(csv);
-  //   var tagsJson = $("#fileJson");
-  //   var tagsFile = tagsJson[0].files[0];
-  //   var fr = new FileReader();
-  //
-  //   fr.onload = receivedText;
-  //   fr.readAsText(tagsFile);
-  // })
 
   $('form#editForm').submit(function(event){
     event.preventDefault();
@@ -242,17 +222,4 @@ $(document).ready(function(){
     var challenges = $("#badgeEditChallenges").val();
     editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges);
   })
-
-
-
-  // $("form#tagForm").submit(function(event){
-  //   event.preventDefault();
-  //   var newTag = $('#badgeTag').val();
-  //   $("#tags").append('<li>' + newTag + '</li>');
-  //   tagsArray.push(newTag);
-  //   $('#badgeTag').val("");
-  //   console.log(tagsArray);
-  // });
-
-
 })

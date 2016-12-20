@@ -67,152 +67,165 @@
                   <button id="deleteButton" class="btn btn-danger btn-lg" type="submit">Delete Badge</button>
                 </form>
               </div>
-              <div class="readable">
-                <form id="badge-form">
-                  <div class="form-group">
-                    <label for="badgeName"> Enter Badge Name</label>
-                    <input id="badge-name" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-index"> Enter Badge Dewey number</label>
-                    <input id="badge-index" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-latitude"> Enter Badge Latitude</label>
-                    <input id="badge-latitude" type="text" value="0" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-longitude"> Enter Badge Longitude</label>
-                    <input id="badge-longitude" type="text" value="0" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-imageUrl"> Enter Badge Image URL</label>
-                    <input id="badge-imageUrl" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-description"> Enter Badge Description</label>
-                    <input id="badge-description" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-proof"> Enter Badge Proof</label>
-                    <input id="badge-proof" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-comments"> Enter Badge Comments</label>
-                    <input id="badge-comments" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-category"> Enter Badge Category Number</label>
-                    <input id="badge-category" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-creator"> Enter Badge Creator</label>
-                    <input id="badge-creator" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-date"> Enter Badge Date</label>
-                    <input id="badge-date" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-tags"> Enter Badge Tags</label>
-                    <input id="badge-tags" type="text" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badge-challenges"> Enter Badge Challenges</label>
-                    <input id="badge-challenges" type="text" class="form-control">
-                  </div>
-                  <input id="bigbutton" type="submit" value="Create Badge" />
-                </form>
 
-                <form id="search-form">
-                  <div class="form-group">
-                    <label for="badgeSearch"> Enter Dewey to Edit Badge</label>
-                    <input id="badgeSearchDewey" class="form-control">
-                  </div>
-                  <button id="searchEditButton" type="submit">Search</button>
-                </form>
-                <form id="editForm">
-                  <div class="form-group">
-                    <label for="badgeEditImage">Existing Badge Image</label>
-                    <img id="badgeEditImage" src="" alt="Existing Badge Image" />
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditImageUrl">Badge Image URL</label>
-                    <input id="edit-image-url"class="form-control">
-                  </div>
+              <!-- create badge form -->
 
-                  <div class="form-group">
-                    <label for="badgeName">Badge Name</label>
-                    <input id="badgeEditName" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeDescription">Badge Description</label>
-                    <input id="badgeEditDescription" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeComments">Badge Comments</label>
-                    <textarea id="badgeEditComments" name="name" rows="8" cols="40"></textarea>
-                    <!-- <input  class="form-control"> -->
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeProof">Badge Proof</label>
-                    <input id="badgeEditProof" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeDewey">Badge Dewey</label>
-                    <input id="badgeEditDewey" class="form-control" type="number" step="any">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeCategory">Badge Category</label>
-                    <input id="badgeEditCategory" class="form-control" type="number">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditLatitude">Badge Latitude</label>
-                    <input id="badgeEditLatitude" class="form-control" type="number">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditLongitude">Badge Longitude</label>
-                    <input id="badgeEditLongitude" class="form-control" type="number">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditCreator">Badge Creator</label>
-                    <input id="badgeEditCreator" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditDate">Badge Date</label>
-                    <input id="badgeEditDate" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditTags">Badge Tags</label>
-                    <input id="badgeEditTags" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="badgeEditChallenges">Badge Challenges</label>
-                    <input id="badgeEditChallenges" class="form-control">
-                  </div>
+              <form id="badge-form">
+                <div class="form-group">
+                  <label for="badgeName"> Enter Badge Name</label>
+                  <input id="badge-name" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-index"> Enter Badge Dewey number</label>
+                  <input id="badge-index" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-latitude"> Enter Badge Latitude</label>
+                  <input id="badge-latitude" type="text" value="0" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-longitude"> Enter Badge Longitude</label>
+                  <input id="badge-longitude" type="text" value="0" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-imageUrl"> Enter Badge Image URL</label>
+                  <input id="badge-imageUrl" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-description"> Enter Badge Description</label>
+                  <input id="badge-description" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-proof"> Enter Badge Proof</label>
+                  <input id="badge-proof" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-comments"> Enter Badge Comments</label>
+                  <input id="badge-comments" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-category"> Enter Badge Category Number</label>
+                  <input id="badge-category" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-creator"> Enter Badge Creator</label>
+                  <input id="badge-creator" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-date"> Enter Badge Date</label>
+                  <input id="badge-date" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-tags"> Enter Badge Tags</label>
+                  <input id="badge-tags" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badge-challenges"> Enter Badge Challenges</label>
+                  <input id="badge-challenges" type="text" class="form-control">
+                </div>
+                <input class="btn btn-primary btn-lg" type="submit" value="Create Badge" />
+              </form>
 
-                  <div class="hidden">
-                    <div class="form-group">
-                      <label for="badge-edit-id">Badge ID</label>
-                      <input id="badge-edit-id" class="form-control">
-                    </div>
-                  </div>
-                  <button type="submit" id="edit-badge-button">Edit Badge</button>
-                </form>
-                <form id="delete-search-form">
+              <!-- edit badge search form -->
+
+              <form id="search-form">
+                <div class="form-group">
+                  <label for="badgeSearch"> Enter Dewey to Edit Badge</label>
+                  <input id="badgeSearchDewey" class="form-control">
+                </div>
+                <button class="btn btn-info btn-lg" id="searchEditButton" type="submit">Search</button>
+              </form>
+
+              <!-- edit badge form -->
+
+              <form id="editForm">
+                <div class="form-group">
+                  <label for="badgeEditImage">Existing Badge Image</label>
+                  <img id="badgeEditImage" src="" alt="Existing Badge Image" />
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditImageUrl">Badge Image URL</label>
+                  <input id="edit-image-url"class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeName">Badge Name</label>
+                  <input id="badgeEditName" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeDescription">Badge Description</label>
+                  <input id="badgeEditDescription" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeComments">Badge Comments</label>
+                  <textarea id="badgeEditComments" name="name" rows="8" cols="40"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="badgeProof">Badge Proof</label>
+                  <input id="badgeEditProof" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeDewey">Badge Dewey</label>
+                  <input id="badgeEditDewey" class="form-control" type="number" step="any">
+                </div>
+                <div class="form-group">
+                  <label for="badgeCategory">Badge Category</label>
+                  <input id="badgeEditCategory" class="form-control" type="number">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditLatitude">Badge Latitude</label>
+                  <input id="badgeEditLatitude" class="form-control" type="number">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditLongitude">Badge Longitude</label>
+                  <input id="badgeEditLongitude" class="form-control" type="number">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditCreator">Badge Creator</label>
+                  <input id="badgeEditCreator" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditDate">Badge Date</label>
+                  <input id="badgeEditDate" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditTags">Badge Tags</label>
+                  <input id="badgeEditTags" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="badgeEditChallenges">Badge Challenges</label>
+                  <input id="badgeEditChallenges" class="form-control">
+                </div>
+                <div class="hidden">
                   <div class="form-group">
+                    <label for="badge-edit-id">Badge ID</label>
+                    <input id="badge-edit-id" class="form-control">
+                  </div>
+                </div>
+                <button class="btn btn-info btn-lg" type="submit" id="edit-badge-button">Edit Badge</button>
+              </form>
+
+              <!-- delete search form -->
+
+              <form id="delete-search-form">
+                <div class="form-group">
+                  <h2>
+                    <hr>
                     <label for="badgeSearch"> Enter Dewey Number of the Badge You Wish to DELETE</label>
-                    <input id="delete-search-dewey" class="form-control">
-                  </div>
-                  <button id="delete-search-button" type="submit">Search</button>
-                </form>
-                <form id="delete-form">
-                  <div id="badge-delete-name"></div>
-                  <img id="badge-delete-image" src="" alt="Existing Badge Image" />
-                  <button type="submit">Delete</button>
-                </form>
+                  </h2>
+                  <input id="delete-search-dewey" class="form-control">
+                </div>
+                <button class="btn btn-danger btn-lg" id="delete-search-button" type="submit">Search</button>
+              </form>
 
-              </div>
+              <!-- delete form -->
+
+              <form id="delete-form">
+                <div id="badge-delete-name"></div>
+                <img id="badge-delete-image" src="" alt="Existing Badge Image" />
+                <div id="badge-delete-description"></div>
+                <div id="badge-delete-proof"></div>
+                <button class="btn btn-danger btn-lg" type="submit">Delete</button>
+              </form>
             </div>
           </div>
         </section>
