@@ -140,6 +140,7 @@ $(document).ready(function(){
     $("#search-form").show();
     $("#badge-form").hide();
     $("#delete-search-form").hide();
+    $("#delete-form").hide();
   })
 
   $("#create").submit(function(event){
@@ -147,6 +148,7 @@ $(document).ready(function(){
     $("#badge-form").show();
     $("#search-form").hide();
     $("#delete-search-form").hide();
+    $("#delete-form").hide();
   })
 
   $("#delete").submit(function(event){
@@ -155,6 +157,7 @@ $(document).ready(function(){
     $("#search-form").hide();
     $("#badge-form").hide();
     $("#editForm").hide();
+    $("#delete-form").hide();
   })
 
   $("#searchEditButton").click(function() {
@@ -170,7 +173,7 @@ $(document).ready(function(){
       var longitude = Number($("#badge-longitude").val());
       var imageUrl = $("#badge-imageUrl").val();
       var description = $("#badge-description").val();
-      var originalIndex = Number($("#badge-index").val())
+      var originalIndex = Number($("#badge-index").val());
       var proof = $("#badge-proof").val();
       var comments = $("#badge-comments").val();
       var category = parseInt($("#badge-category").val());
@@ -186,6 +189,21 @@ $(document).ready(function(){
         function(result) {
           console.log(typeof result);
           createBadge(name, index, latitude, longitude, result, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex);
+          $("#badge-name").val("");
+          $("#badge-index").val("");
+          $("#badge-latitude").val("");
+          $("#badge-longitude").val("");
+          $("#badge-imageUrl").val("");
+          $("#badge-description").val("");
+          $("#badge-index").val("");
+          $("#badge-proof").val("");
+          $("#badge-comments").val("");
+          $("#badge-category").val("");
+          $("#badge-creator").val("");
+          $("#badge-date").val("");
+          $("#badge-tags").val("");
+          $("#badge-challenges").val("");
+          $("#badge-form").hide();
         },function(error){
           alert('Error');
         }
