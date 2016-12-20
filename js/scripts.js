@@ -78,31 +78,35 @@ function getLastId() {
     }
   })
 }
-
-
-
-// function uploadImages(imageArray) {
-//
-//   for (var i = 0; i < imageArray.length; i++) {
-//     firebase.database().ref('images/' + i + '/imageUrl').set(imageArray[i]);
-//   }
-// }
-
 $(document).ready(function(){
-  // var nextId = Number(getLastId() + 1);
 
   // function setEditFormFields(badge){
   //   $("#badgeSearchName").val(badge.name);
   // }
-  $("form.search-form").submit(function(event){
+  $("#search-form").submit(function(event){
     event.preventDefault();
     var searchDewey = "a" + $("#badgeSearchDewey").val();
     searchBadge(searchDewey);
   })
+
+  $("#edit").submit(function(event){
+    event.preventDefault();
+    $("#search-form").show();
+    $("#badge-form").hide();
+  })
+
+  $("#create").submit(function(event){
+    event.preventDefault();
+    $("#badge-form").show();
+    $("#search-form").hide();
+  })
+
+  $("#edit").submit(function(event){
+    event.preventDefault();
+  })
+
   $("#searchEditButton").click(function() {
     $("#editForm").show();
-    $("#badge-creator").val(getLastId());
-
   })
 
   $("form#badge-form").submit(function(event){

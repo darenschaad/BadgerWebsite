@@ -97,3 +97,11 @@ footer {
 #editForm {
     display: none;
 }
+
+#search-form {
+  display: none;
+}
+
+#badge-form {
+  display: none;
+}
