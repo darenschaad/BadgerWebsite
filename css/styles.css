@@ -39,7 +39,7 @@ hr {
   border-color: black;
 }
 .white h5 {
-  color: #e5ffff;
+  color: white;
   font-size: 115%;
 }
 html {
@@ -87,18 +87,20 @@ input#bigbutton:hover, input#bigbutton:focus {
   -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
   box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
 }
-/*
+
 img {
   height: auto;
   width: auto;
   max-width: 200px;
   max-height: 200px;
-}*/
+  padding-left: 50px;
+  padding-right: 50px;
+}
 .badger-branding {
   height: auto;
   width: auto;
   max-width: 500px;
-  max-height: 150px;
+  max-height: 100px;
 }
 
 #editForm {
