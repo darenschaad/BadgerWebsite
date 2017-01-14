@@ -1,3 +1,14 @@
+var firebaseTagsArray = [];
+
+var tagsArrayRef = firebase.database().ref('tags/').once('value').then(function(snapshot){
+  snapshot.forEach(function(childSnapshot){
+    var tag = childSnapshot.val();
+    firebaseTagsArray.push(tag);
+  })
+})
+
+
+
 function createBadge(name, index, latitude, longitude, pushId, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex) {
   // this needs to be .set() with the last badge query + 1 for the id
   // var newRef = firebase.database().ref('badges/').push();
@@ -19,6 +30,19 @@ function createBadge(name, index, latitude, longitude, pushId, imageUrl, descrip
     originalIndex: originalIndex
   }
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
+
+  var createTagsArray = tags.toLowerCase().split(',');
+  var newTagsArrayToFirebase = [];
+
+  for (var i = 0; i < createTagsArray.length; i++) {
+    if (!firebaseTagsArray.includes(createTagsArray[i])) {
+      newTagsArrayToFirebase.push(createTagsArray[i]);
+    }
+  }
+  for (var i = 0; i < newTagsArrayToFirebase.length; i++) {
+    firebaseTagsArray.push(newTagsArrayToFirebase[i]);
+    firebase.database().ref('tags/').push(newTagsArrayToFirebase[i]);
+  }
 }
 
 function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges) {
@@ -68,6 +92,23 @@ function badgeDelete(dewey){
   })
 }
 
+function writeTagsToFirebase() {
+  return firebase.database().ref('/badges').once('value').then(function(snapshot) {
+  var badges = snapshot.val();
+  var allTags = [];
+  for (var i = 0; i < badges.length; i++) {
+    var tags = badges[i].tags.toLowerCase();
+    var tagsArray = tags.split(',');
+    for (var j = 0; j < tagsArray.length; j++) {
+      if (!allTags.includes(tagsArray[j])) {
+        allTags.push(tagsArray[j]);
+      }
+    }
+  }
+  firebase.database().ref('tags/').set(allTags);
+});
+}
+
 function searchBadge(dewey) {
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
@@ -106,9 +147,52 @@ function getLastId() {
 }
 $(document).ready(function(){
 
-  // function setEditFormFields(badge){
-  //   $("#badgeSearchName").val(badge.name);
-  // }
+  $("form#tags").submit(function(event){
+    event.preventDefault();
+    writeTagsToFirebase();
+  });
+
+  $("form#badge-form").submit(function(event){
+    event.preventDefault();
+    var name = $("#badge-name").val();
+    var index = "a" + $("#badge-index").val();
+    var latitude = Number($("#badge-latitude").val());
+    var longitude = Number($("#badge-longitude").val());
+    var imageUrl = $("#badge-imageUrl").val();
+    var description = $("#badge-description").val();
+    var originalIndex = Number($("#badge-index").val());
+    var proof = $("#badge-proof").val();
+    var comments = $("#badge-comments").val();
+    var category = parseInt($("#badge-category").val());
+    var creator = $("#badge-creator").val();
+    var date = $("#badge-date").val();
+    var tags = $("#badge-tags").val();
+    var challenges = $("#badge-challenges").val();
+
+    getLastId().then(
+      function(result) {
+        createBadge(name, index, latitude, longitude, result, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex);
+        $("#badge-name").val("");
+        $("#badge-index").val("");
+        $("#badge-latitude").val("");
+        $("#badge-longitude").val("");
+        $("#badge-imageUrl").val("");
+        $("#badge-description").val("");
+        $("#badge-index").val("");
+        $("#badge-proof").val("");
+        $("#badge-comments").val("");
+        $("#badge-category").val("");
+        $("#badge-creator").val("");
+        $("#badge-date").val("");
+        $("#badge-tags").val("");
+        $("#badge-challenges").val("");
+        $("#badge-form").hide();
+      },function(error){
+        alert('Error');
+      }
+    )
+  });
+
   $("#search-form").submit(function(event){
     event.preventDefault();
     var searchDewey = "a" + $("#badgeSearchDewey").val();
@@ -133,8 +217,6 @@ $(document).ready(function(){
     }else {
       alert("Badge not deleted");
     }
-
-    // $("#delete-form").show();
   })
 
   $("#edit").submit(function(event){
@@ -161,48 +243,6 @@ $(document).ready(function(){
     $("#editForm").hide();
     $("#delete-form").hide();
   })
-
-  $("form#badge-form").submit(function(event){
-    event.preventDefault();
-
-      var name = $("#badge-name").val();
-      var index = "a" + $("#badge-index").val();
-      var latitude = Number($("#badge-latitude").val());
-      var longitude = Number($("#badge-longitude").val());
-      var imageUrl = $("#badge-imageUrl").val();
-      var description = $("#badge-description").val();
-      var originalIndex = Number($("#badge-index").val());
-      var proof = $("#badge-proof").val();
-      var comments = $("#badge-comments").val();
-      var category = parseInt($("#badge-category").val());
-      var creator = $("#badge-creator").val();
-      var date = $("#badge-date").val();
-      var tags = $("#badge-tags").val();
-      var challenges = $("#badge-challenges").val();
-
-      getLastId().then(
-        function(result) {
-          createBadge(name, index, latitude, longitude, result, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex);
-          $("#badge-name").val("");
-          $("#badge-index").val("");
-          $("#badge-latitude").val("");
-          $("#badge-longitude").val("");
-          $("#badge-imageUrl").val("");
-          $("#badge-description").val("");
-          $("#badge-index").val("");
-          $("#badge-proof").val("");
-          $("#badge-comments").val("");
-          $("#badge-category").val("");
-          $("#badge-creator").val("");
-          $("#badge-date").val("");
-          $("#badge-tags").val("");
-          $("#badge-challenges").val("");
-          $("#badge-form").hide();
-        },function(error){
-          alert('Error');
-        }
-      )
-  });
 
   $('form#editForm').submit(function(event){
     event.preventDefault();
