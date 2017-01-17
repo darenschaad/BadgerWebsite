@@ -1,5 +1,8 @@
 var firebaseTagsArray = [];
 
+var preEditTagsArray = [];
+var allBadgeArrayExeptEditBadge = [];
+
 var tagsArrayRef = firebase.database().ref('tags/').once('value').then(function(snapshot){
   snapshot.forEach(function(childSnapshot){
     var tag = childSnapshot.val();
@@ -41,8 +44,8 @@ function createBadge(name, index, latitude, longitude, pushId, imageUrl, descrip
   }
   for (var i = 0; i < newTagsArrayToFirebase.length; i++) {
     firebaseTagsArray.push(newTagsArrayToFirebase[i]);
-    firebase.database().ref('tags/').push(newTagsArrayToFirebase[i]);
   }
+  firebase.database().ref('tags/').set(firebaseTagsArray);
 }
 
 function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges) {
@@ -64,6 +67,67 @@ function editBadge(name, index, latitude, longitude, imageUrl, description, proo
     challenges: challenges
   }
   firebase.database().ref('badges/' + pushId).set(firebaseObject);
+    var postEditBadgeTagsArray = tags.toLowerCase().split(',');
+    var postEditDeleteCheckTagsArray = [];
+    // console.log(preEditTagsArray);
+    // console.log(postEditBadgeTagsArray);
+    for (var i = 0; i < preEditTagsArray.length; i++) {
+      if (!postEditBadgeTagsArray.includes(preEditTagsArray[i])) {
+        postEditDeleteCheckTagsArray.push(preEditTagsArray[i])
+      }
+    }
+    // console.log(postEditDeleteCheckTagsArray);
+    var deleteFromFirebaseTagsArray = postEditDeleteCheckTagsArray;
+    for (var i = 0; i < postEditDeleteCheckTagsArray.length; i++) {
+      for (var j = 0; j < allBadgeArrayExeptEditBadge.length; j++) {
+        var tagCheckArray = allBadgeArrayExeptEditBadge[j].tags.toLowerCase().split(',');
+        for (var k = 0; k < tagCheckArray.length; k++) {
+          if(tagCheckArray[k] === postEditDeleteCheckTagsArray[i]){
+            deleteFromFirebaseTagsArray.splice(i, 1);
+          }
+        }
+      }
+    }
+    console.log(deleteFromFirebaseTagsArray);
+    for (var i = 0; i < deleteFromFirebaseTagsArray.length; i++) {
+      var index = firebaseTagsArray.indexOf(deleteFromFirebaseTagsArray[i]);
+      if (index > -1) {
+        firebaseTagsArray.splice(index, 1);
+      }
+    }
+    // var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
+    //   snapshot.forEach(function(childSnapshot) {
+    //     var badge = childSnapshot.val();
+    //     var badgeId = badge.pushId;
+    //     var deleteRef = firebase.database().ref('badges/');
+    //     deleteRef.child(badgeId).remove();
+    //   })
+    // })
+    var postEditAddCheckTagsArray = [];
+    for (var i = 0; i < postEditBadgeTagsArray.length; i++) {
+      if (!preEditTagsArray.includes(postEditBadgeTagsArray[i])) {
+        postEditAddCheckTagsArray.push(postEditBadgeTagsArray[i])
+      }
+    }
+    // console.log(postEditAddCheckTagsArray);
+    // console.log(allBadgeArrayExeptEditBadge);
+    var addToFirebaseTagsArray = postEditAddCheckTagsArray;
+    for (var i = 0; i < postEditAddCheckTagsArray.length; i++) {
+      for (var j = 0; j < allBadgeArrayExeptEditBadge.length; j++) {
+        var tagCheckArray = allBadgeArrayExeptEditBadge[j].tags.toLowerCase().split(',');
+        for (var k = 0; k < tagCheckArray.length; k++) {
+          if(tagCheckArray[k] === postEditAddCheckTagsArray[i]){
+            addToFirebaseTagsArray.splice(i, 1);
+          }
+        }
+      }
+    }
+    console.log(addToFirebaseTagsArray);
+    for (var i = 0; i < addToFirebaseTagsArray.length; i++) {
+      firebaseTagsArray.push(addToFirebaseTagsArray[i]);
+    }
+    firebase.database().ref('tags/').set(firebaseTagsArray);
+
 }
 
 function searchBadgeDelete(dewey){
@@ -130,6 +194,18 @@ function searchBadge(dewey) {
       $("#badgeEditDate").val(badge.date);
       $("#badgeEditTags").val(badge.tags);
       $("#badgeEditChallenges").val(badge.challenges);
+
+      preEditTagsArray = badge.tags.toLowerCase().split(",");
+
+      var badgeArrayRef = firebase.database().ref('badges/').once('value').then(function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var badgeCheck = childSnapshot.val();
+          if (badgeCheck.index != badge.index) {
+            allBadgeArrayExeptEditBadge.push(badgeCheck);
+          }
+        })
+      })
+
     })
   })
 }
