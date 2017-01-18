@@ -198,7 +198,6 @@ function searchBadgeDelete(dewey){
       $("#badge-delete-name").html("<h1>Activity: " + badge.name + "</h1>");
       $("#badge-delete-description").html("<h3>To Do: " + badge.description + "\n" + badge.comments + " \n </h3> <hr>");
       $("#badge-delete-proof").html("<h3>Proof: " + badge.proof + "</h3>");
-      $('#badge-delete-image').val(firebaseImageUrl);
 
       preDeleteTagsArray = badge.tags.toLowerCase().split(",");
 
@@ -244,6 +243,14 @@ function badgeDelete(dewey){
       deleteRef.child(badgeId).remove();
     })
   })
+}
+
+function clearDeleteBadgeForm() {
+  document.getElementById('badge-delete-image').setAttribute('src', "http://holographicseo.com/cms/wp-content/uploads/2013/04/Hologreaphiseo_No_results_found.jpg");
+  $("#badge-delete-name").html("<h1>No Badge Selected</h1>");
+  $("#badge-delete-description").html("<h3></h3>");
+  $("#badge-delete-proof").html("<h3></h3>");
+  $("#delete-search-dewey").val('');
 }
 
 // end delete badge scripts
@@ -334,6 +341,9 @@ $(document).ready(function(){
     if (answer) {
       var searchDewey = "a" + $("#delete-search-dewey").val();
       badgeDelete(searchDewey);
+      clearDeleteBadgeForm();
+      $("#delete-search-form").hide();
+      $("#delete-form").hide();
     }else {
       alert("Badge not deleted");
     }
@@ -346,6 +356,7 @@ $(document).ready(function(){
     $("#delete-search-form").hide();
     $("#delete-form").hide();
     $("#badgeSearchDewey").val("");
+    clearDeleteBadgeForm();
   })
 
   $("#create").submit(function(event){
@@ -357,6 +368,7 @@ $(document).ready(function(){
     $("#editForm").hide();
     $("#badgeSearchDewey").val("");
     clearEditBadgeForm();
+    clearDeleteBadgeForm();
   })
 
   $("#delete").submit(function(event){
