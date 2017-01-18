@@ -1,3 +1,4 @@
+// globals and reused functions
 var firebaseTagsArray = [];
 
 var preEditTagsArray = [];
@@ -13,11 +14,22 @@ var tagsArrayRef = firebase.database().ref('tags/').once('value').then(function(
   })
 })
 
+// create badge scripts
+
+function getLastId() {
+  return new Promise(function(resolve, reject){
+    try {
+      var query = firebase.database().ref('badges').orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+        resolve(Number(snapshot.key) + 1);
+      });
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
 
 
 function createBadge(name, index, latitude, longitude, pushId, imageUrl, description, proof, comments, category, creator, date, tags, challenges, originalIndex) {
-  // this needs to be .set() with the last badge query + 1 for the id
-  // var newRef = firebase.database().ref('badges/').push();
   var firebaseObject = {
     name: name,
     index: index,
@@ -49,6 +61,47 @@ function createBadge(name, index, latitude, longitude, pushId, imageUrl, descrip
     firebaseTagsArray.push(newTagsArrayToFirebase[i]);
   }
   firebase.database().ref('tags/').set(firebaseTagsArray);
+}
+
+// end create badge scripts
+
+// edit badge scripts
+
+function searchBadge(dewey) {
+  var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var badge = childSnapshot.val();
+      var firebaseImageUrl = badge.imageUrl;
+      var visibleIndex = badge.index.substring(1);
+      document.getElementById('badgeEditImage').setAttribute('src', firebaseImageUrl);
+      $('#edit-image-url').val(firebaseImageUrl);
+      $("#badgeEditName").val(badge.name);
+      $("#badgeEditComments").val(badge.comments);
+      $("#badgeEditDescription").val(badge.description);
+      $("#badgeEditProof").val(badge.proof);
+      $("#badgeEditLatitude").val(badge.latitude);
+      $("#badgeEditLongitude").val(badge.longitude);
+      $("#badgeEditDewey").val(visibleIndex);
+      $("#badgeEditCategory").val(badge.category);
+      $("#badge-edit-id").val(badge.pushId)
+      $("#badgeEditCreator").val(badge.creator);
+      $("#badgeEditDate").val(badge.date);
+      $("#badgeEditTags").val(badge.tags);
+      $("#badgeEditChallenges").val(badge.challenges);
+
+      preEditTagsArray = badge.tags.toLowerCase().split(",");
+
+      var badgeArrayRef = firebase.database().ref('badges/').once('value').then(function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var badgeCheck = childSnapshot.val();
+          if (badgeCheck.index != badge.index) {
+            allBadgeArrayExeptEditBadge.push(badgeCheck);
+          }
+        })
+      })
+
+    })
+  })
 }
 
 function editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges) {
@@ -126,6 +179,15 @@ function editBadge(name, index, latitude, longitude, imageUrl, description, proo
 
 }
 
+function clearEditBadgeForm() {
+  $("#editForm")[0].reset();
+  document.getElementById('badgeEditImage').setAttribute('src', "http://holographicseo.com/cms/wp-content/uploads/2013/04/Hologreaphiseo_No_results_found.jpg");
+}
+
+// end edit badge scripts
+
+// delete badge scripts
+
 function searchBadgeDelete(dewey){
   var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
@@ -184,77 +246,31 @@ function badgeDelete(dewey){
   })
 }
 
-function writeTagsToFirebase() {
-  return firebase.database().ref('/badges').once('value').then(function(snapshot) {
-  var badges = snapshot.val();
-  var allTags = [];
-  for (var i = 0; i < badges.length; i++) {
-    var tags = badges[i].tags.toLowerCase();
-    var tagsArray = tags.split(',');
-    for (var j = 0; j < tagsArray.length; j++) {
-      if (!allTags.includes(tagsArray[j])) {
-        allTags.push(tagsArray[j]);
-      }
-    }
-  }
-  firebase.database().ref('tags/').set(allTags);
-});
-}
+// end delete badge scripts
 
-function searchBadge(dewey) {
-  var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      var badge = childSnapshot.val();
-      var firebaseImageUrl = badge.imageUrl;
-      var visibleIndex = badge.index.substring(1);
-      document.getElementById('badgeEditImage').setAttribute('src', firebaseImageUrl);
-      $('#edit-image-url').val(firebaseImageUrl);
-      $("#badgeEditName").val(badge.name);
-      $("#badgeEditComments").val(badge.comments);
-      $("#badgeEditDescription").val(badge.description);
-      $("#badgeEditProof").val(badge.proof);
-      $("#badgeEditLatitude").val(badge.latitude);
-      $("#badgeEditLongitude").val(badge.longitude);
-      $("#badgeEditDewey").val(visibleIndex);
-      $("#badgeEditCategory").val(badge.category);
-      $("#badge-edit-id").val(badge.pushId)
-      $("#badgeEditCreator").val(badge.creator);
-      $("#badgeEditDate").val(badge.date);
-      $("#badgeEditTags").val(badge.tags);
-      $("#badgeEditChallenges").val(badge.challenges);
+// write tags to firebase initially no longer needed
 
-      preEditTagsArray = badge.tags.toLowerCase().split(",");
+// function writeTagsToFirebase() {
+//   return firebase.database().ref('/badges').once('value').then(function(snapshot) {
+//   var badges = snapshot.val();
+//   var allTags = [];
+//   for (var i = 0; i < badges.length; i++) {
+//     var tags = badges[i].tags.toLowerCase();
+//     var tagsArray = tags.split(',');
+//     for (var j = 0; j < tagsArray.length; j++) {
+//       if (!allTags.includes(tagsArray[j])) {
+//         allTags.push(tagsArray[j]);
+//       }
+//     }
+//   }
+//   firebase.database().ref('tags/').set(allTags);
+// });
+// }
 
-      var badgeArrayRef = firebase.database().ref('badges/').once('value').then(function(snapshot){
-        snapshot.forEach(function(childSnapshot){
-          var badgeCheck = childSnapshot.val();
-          if (badgeCheck.index != badge.index) {
-            allBadgeArrayExeptEditBadge.push(badgeCheck);
-          }
-        })
-      })
+// end write tags to firebase
 
-    })
-  })
-}
-
-function getLastId() {
-  return new Promise(function(resolve, reject){
-    try {
-      var query = firebase.database().ref('badges').orderByKey().limitToLast(1).on("child_added", function(snapshot) {
-        resolve(Number(snapshot.key) + 1);
-      });
-    } catch (e) {
-      reject(e);
-    }
-  })
-}
 $(document).ready(function(){
 
-  $("form#tags").submit(function(event){
-    event.preventDefault();
-    writeTagsToFirebase();
-  });
 
   $("form#badge-form").submit(function(event){
     event.preventDefault();
@@ -337,6 +353,8 @@ $(document).ready(function(){
     $("#search-form").hide();
     $("#delete-search-form").hide();
     $("#delete-form").hide();
+    $("#editForm").hide();
+    clearEditBadgeForm();
   })
 
   $("#delete").submit(function(event){
@@ -346,6 +364,7 @@ $(document).ready(function(){
     $("#badge-form").hide();
     $("#editForm").hide();
     $("#delete-form").hide();
+    clearEditBadgeForm();
   })
 
   $('form#editForm').submit(function(event){
@@ -365,5 +384,17 @@ $(document).ready(function(){
     var tags = $("#badgeEditTags").val();
     var challenges = $("#badgeEditChallenges").val();
     editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges);
+    $("#editForm").hide();
+    clearEditBadgeForm();
   })
+
+  // write tags to firebase initially no longer needed
+
+  // $("form#tags").submit(function(event){
+  //   event.preventDefault();
+  //   writeTagsToFirebase();
+  // });
+
+  // end write tags to firebase initially no longer needed
+
 })
