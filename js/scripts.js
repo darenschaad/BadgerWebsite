@@ -3,6 +3,9 @@ var firebaseTagsArray = [];
 var preEditTagsArray = [];
 var allBadgeArrayExeptEditBadge = [];
 
+var preDeleteTagsArray = [];
+var allBadgeArrayExeptDeleteBadge = [];
+
 var tagsArrayRef = firebase.database().ref('tags/').once('value').then(function(snapshot){
   snapshot.forEach(function(childSnapshot){
     var tag = childSnapshot.val();
@@ -88,21 +91,14 @@ function editBadge(name, index, latitude, longitude, imageUrl, description, proo
         }
       }
     }
-    console.log(deleteFromFirebaseTagsArray);
+    // console.log(deleteFromFirebaseTagsArray);
     for (var i = 0; i < deleteFromFirebaseTagsArray.length; i++) {
       var index = firebaseTagsArray.indexOf(deleteFromFirebaseTagsArray[i]);
       if (index > -1) {
         firebaseTagsArray.splice(index, 1);
       }
     }
-    // var ref = firebase.database().ref('badges/').orderByChild("index").equalTo(dewey).once('value').then(function(snapshot) {
-    //   snapshot.forEach(function(childSnapshot) {
-    //     var badge = childSnapshot.val();
-    //     var badgeId = badge.pushId;
-    //     var deleteRef = firebase.database().ref('badges/');
-    //     deleteRef.child(badgeId).remove();
-    //   })
-    // })
+
     var postEditAddCheckTagsArray = [];
     for (var i = 0; i < postEditBadgeTagsArray.length; i++) {
       if (!preEditTagsArray.includes(postEditBadgeTagsArray[i])) {
@@ -141,6 +137,17 @@ function searchBadgeDelete(dewey){
       $("#badge-delete-description").html("<h3>To Do: " + badge.description + "\n" + badge.comments + " \n </h3> <hr>");
       $("#badge-delete-proof").html("<h3>Proof: " + badge.proof + "</h3>");
       $('#badge-delete-image').val(firebaseImageUrl);
+
+      preDeleteTagsArray = badge.tags.toLowerCase().split(",");
+
+      var badgeArrayRef = firebase.database().ref('badges/').once('value').then(function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var badgeCheck = childSnapshot.val();
+          if (badgeCheck.index != badge.index) {
+            allBadgeArrayExeptDeleteBadge.push(badgeCheck);
+          }
+        })
+      })
     })
   })
 }
@@ -151,6 +158,27 @@ function badgeDelete(dewey){
       var badge = childSnapshot.val();
       var badgeId = badge.pushId;
       var deleteRef = firebase.database().ref('badges/');
+
+      var deleteFromFirebaseTagsArray = preDeleteTagsArray;
+
+      for (var i = 0; i < preDeleteTagsArray.length; i++) {
+        for (var j = 0; j < allBadgeArrayExeptDeleteBadge.length; j++) {
+          var tagCheckArray = allBadgeArrayExeptDeleteBadge[j].tags.toLowerCase().split(',');
+          for (var k = 0; k < tagCheckArray.length; k++) {
+            if (tagCheckArray[k] === preDeleteTagsArray[i]) {
+              deleteFromFirebaseTagsArray.splice(i, 1);
+            }
+          }
+        }
+      }
+
+      for (var i = 0; i < deleteFromFirebaseTagsArray.length; i++) {
+        var index = firebaseTagsArray.indexOf(deleteFromFirebaseTagsArray[i]);
+        if (index > -1) {
+          firebaseTagsArray.splice(index, 1);
+        }
+      }
+      firebase.database().ref('tags/').set(firebaseTagsArray);
       deleteRef.child(badgeId).remove();
     })
   })
