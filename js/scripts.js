@@ -345,6 +345,7 @@ $(document).ready(function(){
     $("#badge-form").hide();
     $("#delete-search-form").hide();
     $("#delete-form").hide();
+    $("#badgeSearchDewey").val("");
   })
 
   $("#create").submit(function(event){
@@ -354,6 +355,7 @@ $(document).ready(function(){
     $("#delete-search-form").hide();
     $("#delete-form").hide();
     $("#editForm").hide();
+    $("#badgeSearchDewey").val("");
     clearEditBadgeForm();
   })
 
@@ -384,7 +386,9 @@ $(document).ready(function(){
     var tags = $("#badgeEditTags").val();
     var challenges = $("#badgeEditChallenges").val();
     editBadge(name, index, latitude, longitude, imageUrl, description, proof, comments, category, pushId, creator, date, tags, challenges);
+    $("#badgeSearchDewey").val("");
     $("#editForm").hide();
+    $("#search-form").hide();
     clearEditBadgeForm();
   })
 
