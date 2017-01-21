@@ -257,22 +257,22 @@ function clearDeleteBadgeForm() {
 
 // write tags to firebase initially no longer needed
 
-// function writeTagsToFirebase() {
-//   return firebase.database().ref('/badges').once('value').then(function(snapshot) {
-//   var badges = snapshot.val();
-//   var allTags = [];
-//   for (var i = 0; i < badges.length; i++) {
-//     var tags = badges[i].tags.toLowerCase();
-//     var tagsArray = tags.split(',');
-//     for (var j = 0; j < tagsArray.length; j++) {
-//       if (!allTags.includes(tagsArray[j])) {
-//         allTags.push(tagsArray[j]);
-//       }
-//     }
-//   }
-//   firebase.database().ref('tags/').set(allTags);
-// });
-// }
+function writeTagsToFirebase() {
+  return firebase.database().ref('/badges').once('value').then(function(snapshot) {
+  var badges = snapshot.val();
+  var allTags = [];
+  for (var i = 0; i < badges.length; i++) {
+    var tags = badges[i].tags.toLowerCase();
+    var tagsArray = tags.split(',');
+    for (var j = 0; j < tagsArray.length; j++) {
+      if (!allTags.includes(tagsArray[j])) {
+        allTags.push(tagsArray[j]);
+      }
+    }
+  }
+  firebase.database().ref('tags/').set(allTags);
+});
+}
 
 // end write tags to firebase
 
@@ -406,10 +406,10 @@ $(document).ready(function(){
 
   // write tags to firebase initially no longer needed
 
-  // $("form#tags").submit(function(event){
-  //   event.preventDefault();
-  //   writeTagsToFirebase();
-  // });
+  $("form#tags").submit(function(event){
+    event.preventDefault();
+    writeTagsToFirebase();
+  });
 
   // end write tags to firebase initially no longer needed
 
